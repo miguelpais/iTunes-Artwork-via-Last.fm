@@ -5,7 +5,7 @@ Last.fm[http://last.fm] is a popular music social network with information about
 The code consists of the lib itself (iTunesLastfmLib.rb) and a usage script (use.rb) which will run the code of the class. Finally you can find an Apple Script updater file (updater) which is some sort of hack to get your iTunes Library updated after you've run the script (more details below).
 
 
-To use the script simply change the use.rb file to define the right paths in your environment. But firt create a new lib object:
+To use the script simply change the use.rb file to define the right paths in your environment. But first create a new lib object:
 
 
 	script = ItunesLastfmLib.new
@@ -34,7 +34,7 @@ And off you go!
 
 
 
-The script will scan through all your files and for each one of them, if 'in_control_mode' ask something like this:
+The script will scan through all your files and for each one of them, if 'in_control_mode' ask something like this.
 
 	Image 1/45 for Ferry Corsten retrieved
 	The file is at /Users/miguel/Music/#Ferry Corsten &#38; Ramin Djawadi - Prison Break Theme/Ferry Corsten and Ramin Djawadi -- Prison Break Theme (Extended mix).mp3
@@ -42,13 +42,15 @@ The script will scan through all your files and for each one of them, if 'in_con
 	
 You can either accept (y) which will aply the image to the track, reject that image, which will make the script fetch another image of the same artist and ask you this time if you accept it, or you can just answer leave and that artist name will not be considered again in the script.
 
+I recommend you run the script with a Terminal tab opened at "tail -f <log_file>" that way you can track what's happening in real time.
+
 
 When the script is over you can delete the images folder. Now you just have to get iTunes to recognize that the files changed. That can be done by playing all of them. Since that can be a tedious task the 'updater' file can do that for you faster.
 
 Just put your library in the Music Playlist, sorted by album and with shuffle off. Then change the number that appears on the 'updater' file to whatever number of songs you have in that music playlist.
 
 	tell application "iTunes"
-		repeat <b>2133</b> times
+		repeat 2133 times
 			play
 			pause
 			next track
