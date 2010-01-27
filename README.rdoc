@@ -1,0 +1,62 @@
+iTunesLastfmLib is a simple script inside a Ruby class that tries to fetch *artist* artwork for you whole iTunes Library via Last.fm[http://last.fm] by storing the images on the mp3 itself.
+
+Last.fm[http://last.fm] is a popular music social network with information about almost every artist out there. However, it doesn't have the covers of the albums to which the tracks belong to, but it has great images of the artists themselves. In my opinion I rather have great images of the artists. If you agree with me, this script might be useful to you.
+
+The code consists of the lib itself (iTunesLastfmLib.rb) and a usage script (use.rb) which will run the code of the class. Finally you can find an Apple Script updater file (updater) which is some sort of hack to get your iTunes Library updated after you've run the script (more details below).
+
+
+To use the script simply change the use.rb file to define the right paths in your environment. But firt create a new lib object:
+
+
+	script = ItunesLastfmLib.new
+
+Define the path to the xml file of your iTunes library, it is usually stored in a folder named iTunes[number] inside your Music folder
+
+	script.itunes_xml_path = "/Users/miguel/Music/iTunes 1/iTunes Library.xml"
+	
+Define the path to store the logfile which will give information about errors during the process of retrieving and applying the album artwork, the file doesn't need to exist.
+
+	script.logfile_path = "/Users/miguel/Desktop/errors.txt"
+
+Each image retrieved will be stored in the following path, you'll have to delete the images after the script is over, <b>and you'll have to create this folder before the script starts</b>.
+	script.image_path = "/Users/miguel/Desktop/images/"
+
+The script operates in two modes, in one you're in control. That means you can see the picture that is going to be applied to what file and accept and choose other or just skip the file. Otherwise the script will always apply the first image retrieved to the file, even if the image doesn't match the artist. 
+	script.in_control_mode = true
+
+In the cuts array you can define words that will cut the the artist name so that something like Linkin Park feat. Jay-z, which may not be found on Last.fm just gets out as just Linkin Park, which will be found. You should also put a space in the beginning and ending of the word.
+	script.cuts = [" with ", " With ", " Feat ", " feat ", " pres ", " Pres ", ",", " vs ", " & "]
+
+And off you go!
+
+	script.start
+
+
+
+
+The script will scan through all your files and for each one of them, if 'in_control_mode' ask something like this:
+
+	Image 1/45 for Ferry Corsten retrieved
+	The file is at /Users/miguel/Music/#Ferry Corsten &#38; Ramin Djawadi - Prison Break Theme/Ferry Corsten and Ramin Djawadi -- Prison Break Theme (Extended mix).mp3
+	Do you accept the image? (y/n/leave)
+	
+You can either accept (y) which will aply the image to the track, reject that image, which will make the script fetch another image of the same artist and ask you this time if you accept it, or you can just answer leave and that artist name will not be considered again in the script.
+
+
+When the script is over you can delete the images folder. Now you just have to get iTunes to recognize that the files changed. That can be done by playing all of them. Since that can be a tedious task the 'updater' file can do that for you faster.
+
+Just put your library in the Music Playlist, sorted by album and with shuffle off. Then change the number that appears on the 'updater' file to whatever number of songs you have in that music playlist.
+
+	tell application "iTunes"
+		repeat <b>2133</b> times
+			play
+			pause
+			next track
+		end repeat
+	end tell
+
+ 
+
+Please notice that this script relies heavily on the ID3Lib for Ruby, which can be a source for bugs.
+
+Comments and forks appreciated. ;)
