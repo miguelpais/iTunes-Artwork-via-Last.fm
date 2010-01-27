@@ -62,3 +62,5 @@ Just put your library in the Music Playlist, sorted by album and with shuffle of
 Please notice that this script relies heavily on the ID3Lib for Ruby, which can be a source for bugs.
 
 Comments and forks appreciated. ;)
+
+For more info and lib requirements check out the blog post I did about this script at http://miguelpais.com/site/view/40[http://miguelpais.com/site/view/40].
